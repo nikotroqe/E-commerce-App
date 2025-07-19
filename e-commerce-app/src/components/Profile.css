@@ -1,0 +1,73 @@
+.profile-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profile-info {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.profile-info strong {
+  color: #333;
+  width: 120px;
+  display: inline-block;
+}
+
+.balance {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.fund-section {
+  margin-top: 30px;
+}
+
+.fund-section h4 {
+  margin-bottom: 10px;
+}
+
+.fund-section input[type="number"] {
+  padding: 8px 12px;
+  width: 150px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.fund-section button {
+  padding: 8px 14px;
+  margin-left: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.fund-section button:hover {
+  background-color: #218838;
+}
+
+.message {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.message.error {
+  color: red;
+}
+
+.message.success {
+  color: green;
+}
