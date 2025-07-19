@@ -23,9 +23,9 @@ const MyProducts = () => {
     try {
       const res = await axiosInstance.get("/Product/my-products");
       setMyProducts(res.data);
-    } catch (err) {
-      console.error("Error fetching products:", err);
-      setError("Failed to fetch products.");
+      setError("");
+    } catch {
+      setError("Failed to load your products");
     }
   };
 
@@ -34,10 +34,9 @@ const MyProducts = () => {
 
     try {
       await axiosInstance.post(`/Product/delete/${id}`);
-      setMyProducts((prevProducts) => prevProducts.filter(product => product.id !== id));
-    } catch (err) {
-      console.error("Error deleting product:", err);
-      setError(err.response?.data?.message || "Failed to delete the product.");
+      fetchMyProducts(); // refresh list
+    } catch {
+      setError("Failed to delete product");
     }
   };
 
