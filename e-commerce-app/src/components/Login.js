@@ -30,8 +30,8 @@ const Login = () => {
       navigate("/home");
             
         } catch (err) {
-            debugger;
-            
+            //debugger;
+            console.log(err)
             setError(err.response?.data?.message || "Login failed");
             return;
         }
