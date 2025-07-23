@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../api/AuthFetch";
+import axiosInstance from "../services/api";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {

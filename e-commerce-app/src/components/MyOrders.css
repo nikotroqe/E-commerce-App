@@ -1,0 +1,120 @@
+.my-orders-container {
+  max-width: 850px;
+  margin: 50px auto;
+  padding: 25px 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+}
+
+.my-orders-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #34495e;
+  margin-bottom: 35px;
+  letter-spacing: 1.1px;
+}
+
+.orders-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  padding: 20px 24px;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+.order-info {
+  flex-grow: 1;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-header {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #2c3e50;
+}
+
+.order-date {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin-bottom: 12px;
+}
+
+.order-items-list {
+  display: flex;
+  gap: 18px;
+  flex-wrap: nowrap;
+  padding-left: 0;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.order-items-list li {
+  list-style: none;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 10px 15px;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.order-items-list img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 0 8px rgba(44, 62, 80, 0.15);
+}
+
+.order-item-details {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 0.95rem;
+}
+
+.order-total {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #000000;
+  margin-left: 30px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.error-message {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.empty-message {
+  font-style: italic;
+  color: #95a5a6;
+  text-align: center;
+  margin-top: 25px;
+}

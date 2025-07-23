@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../api/AuthFetch";
+import axiosInstance from "../services/api";
 import { useNavigate } from "react-router-dom";
 import './Profile.css';
 
@@ -50,14 +50,15 @@ const Profile = () => {
     }
 
     try {
-      await axiosInstance.post("/User/updateBalance", { amount: Number(amount) });
+      await axiosInstance.post(`/User/updateBalance?amount=${amount}`);
       setSuccess("Funds added successfully!");
       setAmount("");
-      fetchBalance(); // rifresko bilancin pas suksesi
+      fetchBalance(); // rifresko bilancin pas suksesit
     } catch (err) {
       setError("Failed to add funds");
     }
   };
+
 
   return (
     <div className="profile-container">
@@ -70,8 +71,9 @@ const Profile = () => {
         <p><strong>Username:</strong> {profile.username || "Loading..."}</p>
         <p><strong>Email:</strong> {profile.email || "Loading..."}</p>
         <p><strong>Wallet Balance:</strong> <span className="balance">${balance}</span></p>
+        <p><strong>Products Sold:</strong> {profile.productsSold}</p>
+        <p><strong>Products Bought:</strong> {profile.productsBought}</p>
       </div>
-
       <div className="fund-section">
         <h4>Add Funds</h4>
         <input

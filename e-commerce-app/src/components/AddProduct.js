@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosInstance from "../api/AuthFetch";
+import axiosInstance from "../services/api";
 import { useNavigate } from "react-router-dom";
 import "./AddProduct.css";
 
@@ -40,14 +40,13 @@ const AddProduct = () => {
       productDescription: description,
       productPrice: Number(price),
       stock: Number(stock),
-      productImageUrl: imageUrl.trim() || null
+      imageUrl: imageUrl.trim() || null
     };
 
     try {
       await axiosInstance.post("/Product/create", productData);
       navigate("/my-products");
     } catch (err) {
-      console.error("Error creating product:", err.response?.data || err.message);
       setError("Failed to create product");
     }
   };

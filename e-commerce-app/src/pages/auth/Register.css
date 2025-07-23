@@ -1,222 +1,88 @@
-/* src/components/auth/Register.css */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&display=swap');
-
-.olympus-register-card {
-  background: linear-gradient(to bottom, #f5f0e3, #fffdf7);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  border: 1px solid #e0d7c1;
-  margin-bottom: 2rem;
-  position: relative;
+/* Register.css */
+body {
+    background-color: #f7f9fc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.olympus-register-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('https://content.artofmanliness.com/uploads/2012/08/gods.jpg');
-  background-size: 400px;
-  opacity: 0.05;
-  pointer-events: none;
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.register-header {
-  background: linear-gradient(to right, rgba(139, 0, 0, 0.8), rgba(139, 0, 0, 0.9));
-  padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.column-left,
-.column-right {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 30px;
-  background-image: url('https://i.imgur.com/xNWldYu.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.3;
-}
-
-.column-left {
-  left: 10px;
-}
-
-.column-right {
-  right: 10px;
-  transform: scaleX(-1);
+.register-form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
 }
 
 .register-title {
-  font-family: 'Cinzel', serif;
-  font-weight: 700;
-  color: #f5d782;
-  font-size: 1.8rem;
-  margin: 0;
-  text-align: center;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #343a40;
 }
 
-.register-body {
-  padding: 2rem;
-  position: relative;
+.register-form .form-group {
+    margin-bottom: 20px;
 }
 
-.meander-line {
-  height: 5px;
-  width: 100%;
-  background-image: url('https://i.imgur.com/HAtLYft.png');
-  background-repeat: repeat-x;
-  background-size: auto 100%;
-  margin-bottom: 2rem;
+.register-form .form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 8px;
+    display: block;
 }
 
-.bottom-line {
-  margin-top: 2rem;
-  margin-bottom: 0;
+.register-form .form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.olympus-alert {
-  padding: 1rem;
-  border-radius: 4px;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.register-form .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: none;
 }
 
-.olympus-alert.error {
-  background-color: rgba(139, 0, 0, 0.1);
-  border-left: 4px solid #8b0000;
-  color: #8b0000;
+.register-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    font-weight: 500;
+    border-radius: 8px;
 }
 
-.alert-icon {
-  font-size: 1.5rem;
+.text-center {
+    text-align: center;
+}
+.login-button-link {
+   margin-top: 10px;
+    padding: 8px 16px;
+    font-weight: 500;
+    border: 0px solid;
+    background-color: white;
+    color: #959ea5;
+    transition: all 0.3s ease;
 }
 
-.alert-text {
-  font-family: 'Philosopher', sans-serif;
-  flex-grow: 1;
+.login-button-link:hover {
+    color: #515a5d;
 }
 
-.olympus-form {
-  margin-bottom: 1.5rem;
-}
-
-.olympus-label {
-  display: flex;
-  align-items: center;
-  font-family: 'Cinzel', serif;
-  font-weight: 700;
-  color: #1a3a5f;
-  margin-bottom: 0.5rem;
-}
-
-.label-icon {
-  font-size: 1.2rem;
-  margin-right: 0.5rem;
-}
-
-.olympus-input {
-  background-color: rgba(255, 255, 255, 0.7);
-  border: 1px solid #d4b662;
+.register-error-message {
+  color: #b00020;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 12px;
   border-radius: 5px;
-  padding: 0.75rem;
-  font-family: 'Philosopher', sans-serif;
-  transition: all 0.3s;
-}
-
-.olympus-input:focus {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-color: #1a3a5f;
-  box-shadow: 0 0 0 0.2rem rgba(26, 58, 95, 0.25);
-}
-
-.olympus-input.is-invalid {
-  border-color: #8b0000;
-  background-image: none;
-}
-
-.olympus-feedback {
-  font-family: 'Philosopher', sans-serif;
-  color: #8b0000;
-  font-style: italic;
-}
-
-.olympus-submit-container {
-  margin-top: 1.5rem;
-}
-
-.olympus-submit-button {
-  width: 100%;
-  background: linear-gradient(to right, #8b0000, #a52a2a);
-  border: none;
-  color: #f5d782;
-  font-family: 'Cinzel', serif;
-  font-weight: 700;
-  padding: 0.75rem 1rem;
-  border-radius: 4px;
-  transition: all 0.3s;
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.olympus-submit-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('https://i.imgur.com/HAtLYft.png');
-  background-size: auto 100%;
-  background-repeat: repeat-x;
-  background-position: center;
-  opacity: 0.2;
-  border-radius: 4px;
-}
-
-.olympus-submit-button:hover {
-  background: linear-gradient(to right, #a52a2a, #b22222);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  color: #fff;
-}
-
-.olympus-submit-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.olympus-submit-button:disabled {
-  background: #b57171;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.olympus-login {
+  margin-bottom: 15px;
+  font-weight: 600;
   text-align: center;
-  font-family: 'Philosopher', sans-serif;
-  color: #555;
-}
-
-.login-link {
-  color: #1a3a5f;
-  font-weight: 700;
-  text-decoration: none;
-  border-bottom: 2px solid #d4b662;
-  transition: all 0.3s;
-}
-
-.login-link:hover {
-  color: #d4b662;
 }

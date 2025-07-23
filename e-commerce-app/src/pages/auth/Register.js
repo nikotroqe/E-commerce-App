@@ -1,228 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
-import { useNavigate, Link } from 'react-router-dom';
-import AuthService from '../../services/auth.service';
-import { UserData } from '../../models/UserData';
-import './Register.css';
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import AuthService from '../../services/auth.service.js';
+import "./Register.css";
 
 const Register = () => {
-  const navigate = useNavigate();
-  const [userData, setUserData] = useState(new UserData());
-  const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState('');
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    if (AuthService.isAuthenticated()) {
-      navigate('/');
+    const validate = () => {
+    if (username.length < 3 || username.length > 20) {
+        return "Username must be 3–20 characters";
     }
-  }, [navigate]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData(userData.update(name, value));
-    if (touched[name]) {
-      validateField(name, value);
+    if (password.length < 8) {
+        return "Password must be at least 8 characters";
     }
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    setTouched({ ...touched, [name]: true });
-    validateField(name, value);
-  };
-
-  const validateField = (name, value) => {
-    const tempUserData = userData.update(name, value);
-    const validationErrors = tempUserData.validate();
-    setErrors(prev => ({
-      ...prev,
-      [name]: validationErrors[name] || null
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    const allTouched = {
-      username: true,
-      email: true,
-      password: true,
-      confirmPassword: true
+    if (password !== confirmPassword) {
+        return "Passwords do not match";
+    }
+    return null;
     };
-    setTouched(allTouched);
-    
-    const validationErrors = userData.validate();
-    setErrors(validationErrors);
-    
-    if (Object.keys(validationErrors).length > 0) {
-      return;
-    }
-    
-    setSubmitting(true);
-    setError('');
-    
-    try {
-      const apiData = userData.toApiFormat();
-      await AuthService.register(apiData);
-      
-      const loginData = userData.toLoginData();
-      await AuthService.login(loginData);
 
-      navigate('/');
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationError = validate();
+    if (validationError) {
+        setError(validationError);
+        return;
+    }
+    setError("");
+
+    try {
+        const userData = {
+            username,
+            email,
+            password,
+            confirmPassword
+        };
+        const response = await AuthService.register(userData );
+        debugger;
+        const token = response.token;
+        localStorage.setItem("token", token);
+        navigate("/home"); 
     } catch (err) {
-      let errorMessage = 'The Fates reject your registration. Please try again.';
-      
-      if (err.response) {
-        if (typeof err.response.data === 'string') {
-          errorMessage = err.response.data;
-        } else if (err.response.data && typeof err.response.data === 'object') {
-          const errors = [];
-          for (const key in err.response.data) {
-            if (Array.isArray(err.response.data[key])) {
-              errors.push(...err.response.data[key]);
-            } else {
-              errors.push(err.response.data[key]);
-            }
-          }
-          if (errors.length > 0) {
-            errorMessage = errors.join(', ');
-          }
-        }
-      }
-      
-      setError(errorMessage);
-      setSubmitting(false);
+        debugger;
+        setError(err.response?.data?.message || "Registration failed");
     }
   };
 
-  return (
-    <Container className="mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="olympus-register-card">
-            <div className="register-header">
-              <div className="column-left"></div>
-              <h3 className="register-title">JOIN THE PANTHEON</h3>
-              <div className="column-right"></div>
-            </div>
-            
-            <div className="register-body">
-              <div className="meander-line"></div>
-              
-              {error && (
-                <div className="olympus-alert error">
-                  <span className="alert-icon">⚡</span>
-                  <span className="alert-text">{error}</span>
+    return (
+        <div className="register-container">
+            <Form onSubmit={handleSubmit} className="register-form">
+                <h2 className="register-title">Register</h2>
+
+                {error && <div className="register-error-message">{error}</div>}
+
+                <Form.Group controlId="registerUsername">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="registerEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                        type="email"
+                        placeholder="Enter email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="registerPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="registerConfirmPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Button variant="primary" type="submit" className="register-button">
+                    Register
+                </Button>
+
+                <div className="text-center mt-3">
+                    Already have an account?
+                    <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        className="login-button-link"
+                        onClick={() => navigate("/")}
+                    >
+                        Login
+                    </Button>
                 </div>
-              )}
-              
-              <Form onSubmit={handleSubmit} className="olympus-form">
-                <Form.Group className="mb-3">
-                  <Form.Label className="olympus-label">
-                    <span className="label-icon">👤</span>
-                    <span>Heroic Name</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="username"
-                    value={userData.username}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.username && !!errors.username}
-                    className="olympus-input"
-                    placeholder="What shall we call you, hero?"
-                  />
-                  <Form.Control.Feedback type="invalid" className="olympus-feedback">
-                    {errors.username}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label className="olympus-label">
-                    <span className="label-icon">📜</span>
-                    <span>Message Scroll (Email)</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    value={userData.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.email && !!errors.email}
-                    className="olympus-input"
-                    placeholder="Where shall Hermes deliver your messages?"
-                  />
-                  <Form.Control.Feedback type="invalid" className="olympus-feedback">
-                    {errors.email}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label className="olympus-label">
-                    <span className="label-icon">🔒</span>
-                    <span>Sacred Password</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="password"
-                    value={userData.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.password && !!errors.password}
-                    className="olympus-input"
-                    placeholder="Create a secret known only to you"
-                  />
-                  <Form.Control.Feedback type="invalid" className="olympus-feedback">
-                    {errors.password}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label className="olympus-label">
-                    <span className="label-icon">🔒</span>
-                    <span>Confirm Sacred Oath</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="password"
-                    name="confirmPassword"
-                    value={userData.confirmPassword}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    isInvalid={touched.confirmPassword && !!errors.confirmPassword}
-                    className="olympus-input"
-                    placeholder="Repeat your sacred words"
-                  />
-                  <Form.Control.Feedback type="invalid" className="olympus-feedback">
-                    {errors.confirmPassword}
-                  </Form.Control.Feedback>
-                </Form.Group>
-
-                <div className="olympus-submit-container">
-                  <Button 
-                    type="submit" 
-                    disabled={submitting}
-                    className="olympus-submit-button"
-                  >
-                    {submitting ? 'THE FATES DECIDE...' : 'ASCEND TO OLYMPUS'}
-                  </Button>
-                </div>
-              </Form>
-              
-              <div className="olympus-login">
-                <p>
-                  Already a demigod? <Link to="/login" className="login-link">Enter the Agora</Link>
-                </p>
-              </div>
-              
-              <div className="meander-line bottom-line"></div>
-            </div>
-          </div>
+            </Form>
         </div>
-      </div>
-    </Container>
-  );
+    );
 };
 
 export default Register;

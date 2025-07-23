@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../api/AuthFetch";
+import axiosInstance from "../services/api";
 import { useNavigate } from "react-router-dom";
+import "./MyOrders.css"
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -8,52 +9,63 @@ const MyOrders = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    navigate("/login");
-  } else {
-    fetchOrders();
-  }
-}, [navigate]);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetchOrders();
+    }
+  }, [navigate]);
 
   const fetchOrders = async () => {
     try {
       const response = await axiosInstance.get("/Product/my-orders");
       setOrders(response.data);
+      setError("");
     } catch {
       setError("Failed to load orders.");
+      setOrders([]);
     }
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>📦 My Orders</h2>
+  <div className="my-orders-container">
+    <h2>📦 My Orders</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    {error && <p className="error-message">{error}</p>}
 
-      {orders.length === 0 ? (
-        <p>You have no orders.</p>
-      ) : (
-        <ul>
-          {orders.map((order) => (
-            <li key={order.orderId} style={{ marginBottom: 15 }}>
-              <strong>Order #{order.orderId}</strong> - {new Date(order.date).toLocaleString()}
-              <ul>
-                {order.items.map((item, index) => (
-                  <li key={index}>
-                    {item.name} - ${item.price} × {item.quantity}
-                  </li>
-                ))}
-              </ul>
-              <p>Total: ${order.totalAmount}</p>
-              <hr />
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
+    {orders.length === 0 ? (
+      <p className="empty-message">You have no orders.</p>
+    ) : (
+      <ul className="orders-list">
+        {orders.map((order) => (
+          <li key={order.id} className="order-item">
+            <div className="order-header">
+              Order {order.orderNumber}
+            </div>
+            <div className="order-date">
+              {new Date(order.createdAt).toLocaleString()}
+            </div>
+
+            <ul className="order-items-list">
+              {order.orderItems.map((item) => (
+                <li key={item.id}>
+                  <img src={item.product.imageUrl} alt={item.product.productName} />
+                  <div className="order-item-details">
+                    {item.product.productName} - ${item.product.productPrice} × {item.quantity}
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <p className="order-total">Total: ${order.totalAmount}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
+
 };
 
 export default MyOrders;
-

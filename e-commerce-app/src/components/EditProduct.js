@@ -1,8 +1,9 @@
-/*import React, { useState, useEffect, useCallback } from "react";
-import axiosInstance from "../api/AuthFetch";
+import React, { useState, useEffect, useCallback } from "react";
+import axiosInstance from "../services/api";
 import { useNavigate, useParams } from "react-router-dom";
+import "./EditProduct.css";
 
-const AddEditProduct = () => {
+const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -10,19 +11,19 @@ const AddEditProduct = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
 
   // ✅ Funksioni i mbështjellë me useCallback
   const fetchProduct = useCallback(async () => {
     try {
-      const res = await axiosInstance.get(`/api/Product/${id}`);
+      const res = await axiosInstance.get(`/Product/${id}`);
       const prod = res.data;
-      setName(prod.name);
-      setDescription(prod.description);
-      setPrice(prod.price);
-      setStock(prod.stock);
-      setImageUrl(prod.imageUrl || "");
-      setError("");
+      setName(prod.productName || "");
+      setDescription(prod.productDescription || "");
+      setPrice(prod.productPrice ?? "");
+      setStock(prod.stock ?? "");
+      setImageUrl(prod.imageUrl ?? "");
     } catch {
       setError("Failed to load product details");
     }
@@ -55,38 +56,41 @@ const AddEditProduct = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
+  e.preventDefault();
+  if (!validate()) return;
 
-    const productData = {
-      name,
-      description,
-      price: Number(price),
-      stock: Number(stock)
-    };
-
-    try {
-      if (id) {
-        await axiosInstance.post("/api/Product/update", { id, ...productData });
-      } else {
-        await axiosInstance.post("/api/Product/create", productData);
-      }
-      setError("");
-      navigate("/my-products");
-    } catch {
-      setError("Failed to save product");
-    }
+  const productData = {
+    id,
+    productName: name,
+    productDescription: description,
+    productPrice: Number(price),
+    stock: Number(stock),
+    imageUrl: imageUrl.trim() || null,
   };
 
+  try {
+    if (id) {
+      await axiosInstance.post("/Product/update", productData);
+    } else {
+      await axiosInstance.post("/Product/create", productData);
+    }
+    setError("");
+    navigate("/my-products");
+  } catch {
+    setError("Failed to save product");
+  }
+};
+
+
   return (
-    <div style={{ padding: 20 }}>
-      <h2>{id ? "Edit Product" : "Add New Product"}</h2>
+    <div className="edit-product-container">
+      <h2 className="edit-product-title">Edit Product</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="edit-product-error">{error}</p>}
 
-      <form onSubmit={handleSubmit}>
+      <form className="edit-product-form" onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label><br />
+          <label>Name:</label>
           <input
             type="text"
             value={name}
@@ -97,7 +101,7 @@ const AddEditProduct = () => {
         </div>
 
         <div>
-          <label>Description:</label><br />
+          <label>Description:</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -107,18 +111,12 @@ const AddEditProduct = () => {
         </div>
 
         <div>
-          <label>Price:</label><br />
-          <input
-            type="number"
-            step="0.01"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
+          <label>Price:</label>
+          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} required />
         </div>
 
         <div>
-          <label>Stock:</label><br />
+          <label>Stock:</label>
           <input
             type="number"
             value={stock}
@@ -127,10 +125,20 @@ const AddEditProduct = () => {
           />
         </div>
 
-        <button type="submit">{id ? "Update Product" : "Create Product"}</button>
+        <div>
+          <label>Image URL (optional):</label>
+          <input
+            type="text"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            placeholder="https://example.com/image.jpg"
+          />
+        </div>
+
+        <button type="submit">Update Product</button>
       </form>
     </div>
   );
 };
 
-export default AddEditProduct;*/
+export default EditProduct;
