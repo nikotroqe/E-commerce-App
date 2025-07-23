@@ -29,6 +29,7 @@ const ProductDetails = () => {
 
   return (
     <div className="product-details-container">
+      {product.imageUrl && (<img src={product.imageUrl} alt={product.productName} className="product-details-image" />)}
       <h2 className="product-title">{product.productName}</h2>
       <p className="product-description">{product.productDescription}</p>
       <p className="product-price">Price: ${product.productPrice}</p>

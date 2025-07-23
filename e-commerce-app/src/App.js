@@ -1,6 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Home from "./components/Home";
@@ -9,9 +11,20 @@ import Cart from "./components/Cart";
 import MyOrders from "./components/MyOrders";
 import MyProducts from "./components/MyProducts";
 import AddProduct from "./components/AddProduct";
-import Profile from "./components/Profile";
 import EditProduct from "./components/EditProduct";
-import Footer from "./components/Footer";
+import Profile from "./components/Profile";
+
+import AuthService from "./services/auth.service";
+
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = AuthService.isAuthenticated();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
@@ -25,15 +38,70 @@ function App() {
             <>
               <Navbar />
               <Routes>
-                <Route path="home" element={<Home />} />
-                <Route path="product/:id" element={<ProductDetails />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/orders" element={<MyOrders />} />
-                <Route path="/my-products" element={<MyProducts />} />
-                <Route path="/add-product" element={<AddProduct />} />
-                <Route path="/add-product" element={<EditProduct />} />
-                <Route path="/edit-product/:id" element={<EditProduct />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route
+                  path="/home"
+                  element={
+                    <ProtectedRoute>
+                      <Home />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/product/:id"
+                  element={
+                    <ProtectedRoute>
+                      <ProductDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/cart"
+                  element={
+                    <ProtectedRoute>
+                      <Cart />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/orders"
+                  element={
+                    <ProtectedRoute>
+                      <MyOrders />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/my-products"
+                  element={
+                    <ProtectedRoute>
+                      <MyProducts />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/add-product"
+                  element={
+                    <ProtectedRoute>
+                      <AddProduct />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/edit-product/:id"
+                  element={
+                    <ProtectedRoute>
+                      <EditProduct />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
               <Footer />
             </>
@@ -43,6 +111,5 @@ function App() {
     </Router>
   );
 }
-
 
 export default App;
