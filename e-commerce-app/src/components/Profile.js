@@ -70,7 +70,7 @@ const Profile = () => {
       <div className="profile-info">
         <p><strong>Username:</strong> {profile.username || "Loading..."}</p>
         <p><strong>Email:</strong> {profile.email || "Loading..."}</p>
-        <p><strong>Wallet Balance:</strong> <span className="balance">${balance}</span></p>
+        <p><strong>Wallet Balance:</strong> <span className="profile-balance">${balance}</span></p>
         <p><strong>Products Sold:</strong> {profile.productsSold}</p>
         <p><strong>Products Bought:</strong> {profile.productsBought}</p>
       </div>

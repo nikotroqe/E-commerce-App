@@ -1,7 +1,7 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../services/api";
-
+import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,71 +29,22 @@ const Navbar = () => {
   };
 
   return (
-  <nav style={navbarStyle}>
-    <div style={leftSectionStyle}>
-      <img src="/videoteka-logo.png" alt="Logo" style={logoStyle} />
-    </div>
+    <nav className="navbar">
+      <div className="left-section">
+        <img src="/videoteka-logo.png" alt="Logo" className="logo" />
+      </div>
 
-    <div style={rightSectionStyle}>
-      <Link to="/home" style={linkStyle}>Home</Link>
-      <Link to="/cart" style={linkStyle}>Cart</Link>
-      <Link to="/my-products" style={linkStyle}>My Products</Link>
-      <Link to="/orders" style={linkStyle}>My Orders</Link>
-      <Link to="/profile" style={linkStyle}>Profile</Link>
-      <div style={balanceStyle}>💰 ${balance}</div>
-      <button onClick={handleLogout} style={logoutButtonStyle}>Logout</button>
-    </div>
-  </nav>
- );
+      <div className="right-section">
+        <Link to="/home" className="link">Home</Link>
+        <Link to="/cart" className="link">Cart</Link>
+        <Link to="/my-products" className="link">My Products</Link>
+        <Link to="/orders" className="link">My Orders</Link>
+        <Link to="/profile" className="link">Profile</Link>
+        <div className="balance">💰 ${balance}</div>
+        <button onClick={handleLogout} className="logout-button">Logout</button>
+      </div>
+    </nav>
+  );
 };
-
-const navbarStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  padding: "10px 24px",
-  background: "#0d6efd",
-  flexWrap: "wrap",
-};
-
-const leftSectionStyle = {
-  display: "flex",
-  alignItems: "center",
-};
-
-const rightSectionStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: "15px",
-  flexWrap: "wrap",
-};
-
-const logoStyle = {
-  height: 28,
-};
-
-const linkStyle = {
-  color: "#fff",
-  textDecoration: "none",
-  fontWeight: "500",
-  fontSize: "15px",
-};
-
-const balanceStyle = {
-  color: "#fff",
-  fontWeight: "bold",
-  fontSize: "14px",
-};
-
-const logoutButtonStyle = {
-  padding: "6px 14px",
-  background: "#dc3545",
-  border: "none",
-  borderRadius: "4px",
-  color: "#fff",
-  cursor: "pointer",
-  fontWeight: "500",
-};
-
 
 export default Navbar;

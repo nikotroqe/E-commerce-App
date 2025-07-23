@@ -45,7 +45,7 @@ const MyProducts = () => {
     <div className="my-products-container">
       <div className="my-products-header">
         <h2>My Products</h2>
-        <Link to="/add-product" className="add-link">➕ Add New Product</Link>
+        <Link to="/add-product" className="add-link">Add New Product</Link>
       </div>
 
       {error && <p style={{ color: "red" }}>{error}</p>}

@@ -1,7 +1,8 @@
 .my-products-container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 50px;
+  padding-bottom: 10%;
   font-family: Arial, sans-serif;
 }
 
@@ -13,18 +14,34 @@
 }
 
 .add-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   background-color: #28a745;
   color: white;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+  padding: 10px 18px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+  font-size: 16px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
 }
 
 .add-link:hover {
   background-color: #218838;
+  box-shadow: 0 6px 12px rgba(33, 136, 56, 0.5);
+  transform: translateY(-2px);
 }
+
+/* Optional: Shto ikonë plus me CSS pseudo-element */
+.add-link::before {
+  content: "+";
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1;
+}
+
 
 
 .my-product-header,

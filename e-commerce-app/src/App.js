@@ -11,6 +11,7 @@ import MyProducts from "./components/MyProducts";
 import AddProduct from "./components/AddProduct";
 import Profile from "./components/Profile";
 import EditProduct from "./components/EditProduct";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/edit-product/:id" element={<EditProduct />} />
                 <Route path="/profile" element={<Profile />} />
               </Routes>
+              <Footer />
             </>
           }
         />
