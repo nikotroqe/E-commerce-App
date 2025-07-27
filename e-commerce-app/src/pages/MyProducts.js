@@ -55,7 +55,7 @@ const MyProducts = () => {
       ) : (
         <div className="my-product-list">
           <div className="my-product-header">
-            <div>Image</div>
+            <div></div>
             <div>Name</div>
             <div>Price</div>
             <div>Stock</div>

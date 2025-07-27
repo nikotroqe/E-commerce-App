@@ -15,9 +15,8 @@ const Home = () => {
   const [userId, setUserId] = useState(null);
   const [balance, setBalance] = useState(0);
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 8;
 
   const navigate = useNavigate();
 
@@ -47,7 +46,7 @@ const Home = () => {
       setProducts(res.data);
       setFilteredProducts(res.data);
       setError("");
-      setCurrentPage(1); // reset pagination
+      setCurrentPage(1);
     } catch {
       setError("Failed to load products");
     }
@@ -89,7 +88,7 @@ const Home = () => {
         maxPrice: maxPrice === "" ? 0 : parseFloat(maxPrice),
       });
       setFilteredProducts(res.data);
-      setCurrentPage(1); // reset pagination after filter
+      setCurrentPage(1);
     } catch {
       console.error("Filter failed");
       setError("Filter failed");
@@ -104,7 +103,6 @@ const Home = () => {
     setCurrentPage(1);
   };
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
@@ -177,9 +175,9 @@ const Home = () => {
                 <p>🛒 Seller: {prod.username}</p>
                 <button
                   onClick={() => addToCart(prod)}
-                  disabled={prod.sellerId === userId || prod.stock === 0}
+                  disabled={prod.userId === userId || prod.stock === 0}
                   title={
-                    prod.sellerId === userId
+                    prod.userId === userId
                       ? "Yours"
                       : prod.stock === 0
                       ? "Out of stock"

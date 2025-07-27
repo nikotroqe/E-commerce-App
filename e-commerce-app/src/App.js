@@ -3,18 +3,18 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Home from "./components/Home";
-import ProductDetails from "./components/ProductDetails";
-import Cart from "./components/Cart";
-import MyOrders from "./components/MyOrders";
-import MyProducts from "./components/MyProducts";
-import AddProduct from "./components/AddProduct";
-import EditProduct from "./components/EditProduct";
-import Profile from "./components/Profile";
+import Login from "./base/auth/Login";
+import Register from "./base/auth/Register";
+import Home from "./pages/Home";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
+import MyOrders from "./pages/MyOrders";
+import MyProducts from "./pages/MyProducts";
+import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
+import Profile from "./pages/Profile";
 
-import AuthService from "./services/auth.service";
+import AuthService from './services/auth.service';
 
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = AuthService.isAuthenticated();
